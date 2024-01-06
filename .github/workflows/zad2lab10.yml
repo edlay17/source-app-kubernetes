@@ -6,12 +6,18 @@ on:
     tags: 
       - v1.*
 
-env:
-  TAG: ${{ github.event.ref##*/ }}'
-
 jobs:
+  setTAG:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Set current TAG
+        run: echo "TAG=${github.event.ref##*/}" >> $GITHUB_ENV
+
   dockerCI:
     runs-on: ubuntu-latest
+
+    needs: setTAG
 
     steps:
       - uses: actions/checkout@v4
@@ -39,6 +45,9 @@ jobs:
  
   kubernetesCI:
     runs-on: ubuntu-latest
+
+    needs: dockerCI
+
     steps:
       - uses: actions/checkout@v4
         with:
