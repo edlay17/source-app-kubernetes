@@ -7,7 +7,7 @@ on:
     tags: 
       - v1.*
 jobs:
-  check-bats-version:
+  echo-hello:
     runs-on: ubuntu-latest
     steps:
       - name: Run a one-line script
