@@ -1,4 +1,4 @@
 FROM php:8.2-apache
     
-COPY . /var/www/html/
+COPY ./web-app /var/www/html/
 WORKDIR /var/www/html/
