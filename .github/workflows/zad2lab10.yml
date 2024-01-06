@@ -12,7 +12,7 @@ jobs:
     
     steps:
       - name: Set current TAG
-        run: echo "TAG=${github.event.ref##*/}" >> $GITHUB_ENV
+        run: echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
   dockerCI:
     runs-on: ubuntu-latest
