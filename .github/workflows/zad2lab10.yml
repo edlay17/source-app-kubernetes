@@ -21,9 +21,6 @@ jobs:
           echo TAG=$(echo "${{ github.event.ref }}" | sed 's/refs\/tags\///')  >> $GITHUB_ENV
         shell: bash
 
-      - name: Tag setted
-        run: echo "env.TAG is $TAG" |
-
   dockerCI:
     runs-on: ubuntu-latest
 
