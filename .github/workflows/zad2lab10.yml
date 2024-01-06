@@ -9,17 +9,15 @@ on:
 jobs:
   setTAG:
     runs-on: ubuntu-latest
-    
+
     outputs:
-      id: tag-output
-      values: ${{ steps.tag.outputs }}
+      tag: ${{ steps.tag.outputs.TAG }}
 
     steps:
       - name: Set current TAG
         id: tag
         run: |
-          echo TAG=$(echo "${{ github.event.ref }}" | sed 's/refs\/tags\///')  >> $GITHUB_ENV
-        shell: bash
+          echo TAG=$(echo "${{ github.event.ref }}" | sed 's/refs\/tags\///')  >> "$GITHUB_OUTPUT"
 
   dockerCI:
     runs-on: ubuntu-latest
@@ -42,13 +40,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Building and pushing
-        run: echo "bulding and pusing ${{ needs.setTag.outputs.tag-output.values.TAG }} tag" |
+        run: echo "bulding and pusing ${{ needs.setTag.outputs.tag }} tag" |
          
       - name: Build and push Docker images
         uses: docker/build-push-action@v5.1.0
         with:
           push: true
-          tags: ed358/web-app:${{ needs.setTag.outputs.tag-output.values.TAG }}
+          tags: ed358/web-app:${{ needs.setTag.outputs.tag-output }}
  
   kubernetesCI:
     runs-on: ubuntu-latest
@@ -70,7 +68,7 @@ jobs:
       
       - name: Modify Manifests
         run: |
-          sed -i 's|ed358/web-app:latest|ed358/web-app:${{ needs.setTag.outputs.tag-output.values.TAG }}|' deployment.yaml
+          sed -i 's|ed358/web-app:latest|ed358/web-app:${{ needs.setTag.outputs.tag-output }}|' deployment.yaml
           git add deployment.yaml
           git commit -m "Update Docker image version in deployment.yaml"
           git push
