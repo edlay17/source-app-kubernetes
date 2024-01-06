@@ -7,7 +7,7 @@ on:
       - v1.*
 
 env:
-  TAG: echo "${{ github.event.ref }}" | sed 's|refs/tags/\(.*\)|\1|'
+  TAG: ${{ github.event.ref }}" | sed 's|refs/tags/\(.*\)|\1|'
 
 jobs:
   dockerCI:
