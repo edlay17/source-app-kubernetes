@@ -6,8 +6,48 @@ on:
     tags: 
       - v1.*
 jobs:
-  build:
+  dockerCI:
     runs-on: ubuntu-latest
     steps:
-      - name: Run a one-line script
+      - uses: actions/checkout@v4
+
+      - name: Show notification
         run: echo Deploy process is running! 
+             
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v3.0.0
+           
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v3.0.0
+         
+      - name: Docker Login
+        uses: docker/login-action@v3.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+         
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v5.1.0
+          with:
+            push: true
+            tags: user/app:latest
+ 
+  # kubernetesCI:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         repository: 'edlay17/config-kubernetes'
+
+  #     - name: Configure Git Access
+  #       run: |
+  #         git config --global user.email "actions@github.com"
+  #         git config --global user.name "GitHub Actions"
+      
+  #     - name: Modify Manifests
+  #       run: |
+  #         sed -i 's|old-image:latest|my-dockerhub-username/my-image:latest|' config/manifest.yaml
+  #         sed -i 's|old-image:v1|my-dockerhub-username/my-image:v1.${{ github.run_number }}|' config/manifest.yaml
+  #         git add config/manifest.yaml
+  #         git commit -m "Update Docker image version in manifests"
+  #         git push
