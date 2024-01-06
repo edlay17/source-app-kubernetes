@@ -16,7 +16,7 @@ jobs:
     steps:
       - id: tag
         run: |
-          echo "${{ github.event.ref }}" | sed 's/refs\/tags\///') >> "$GITHUB_OUTPUT"
+          echo "tag=${{ github.event.ref }}" | sed 's/refs\/tags\///') >> "$GITHUB_OUTPUT"
 
   dockerCI:
     runs-on: ubuntu-latest
