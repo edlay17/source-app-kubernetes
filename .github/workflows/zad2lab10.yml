@@ -30,7 +30,7 @@ jobs:
         uses: docker/build-push-action@v5.1.0
         with:
           push: true
-          tags: user/app:latest
+          tags: ed358/web-app:latest
  
   # kubernetesCI:
   #   runs-on: ubuntu-latest
