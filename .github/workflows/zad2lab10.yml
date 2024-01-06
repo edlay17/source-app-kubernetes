@@ -11,13 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      tag: ${{ steps.tag.outputs.TAG }}
+      tag: ${{ steps.tag.outputs.tag }}
 
     steps:
-      - name: Set current TAG
-        id: tag
+      - id: tag
         run: |
-          echo TAG=$(echo "${{ github.event.ref }}" | sed 's/refs\/tags\///')  >> "$GITHUB_OUTPUT"
+          echo tag=$(echo "${{ github.event.ref }}" | sed 's/refs\/tags\///')  >> "$GITHUB_OUTPUT"
 
   dockerCI:
     runs-on: ubuntu-latest
