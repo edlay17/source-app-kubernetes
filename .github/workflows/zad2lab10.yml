@@ -1,12 +1,13 @@
 name: github-ci-cd
 run-name: github-ci-cd is running by ${{ github.actor }} 
 on: 
+  workflow_dispatch:
   push:
     tags: 
       - v1.*
 jobs:
-  echo-hello:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo Deploy process is running! 
