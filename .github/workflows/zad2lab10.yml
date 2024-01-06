@@ -8,6 +8,10 @@ on:
 jobs:
   dockerCI:
     runs-on: ubuntu-latest
+
+    env:
+      TAG: $(echo "${GITHUB_REF}" | sed -n 's|refs/tags/\(.*\)|\1|p')
+
     steps:
       - uses: actions/checkout@v4
 
@@ -30,24 +34,23 @@ jobs:
         uses: docker/build-push-action@v5.1.0
         with:
           push: true
-          tags: ed358/web-app:latest
+          tags: "ed358/web-app:$TAG"
  
-  # kubernetesCI:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         repository: 'edlay17/config-kubernetes'
+  kubernetesCI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'edlay17/config-kubernetes'
 
-  #     - name: Configure Git Access
-  #       run: |
-  #         git config --global user.email "actions@github.com"
-  #         git config --global user.name "GitHub Actions"
+      - name: Configure Git Access
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
       
-  #     - name: Modify Manifests
-  #       run: |
-  #         sed -i 's|old-image:latest|my-dockerhub-username/my-image:latest|' config/manifest.yaml
-  #         sed -i 's|old-image:v1|my-dockerhub-username/my-image:v1.${{ github.run_number }}|' config/manifest.yaml
-  #         git add config/manifest.yaml
-  #         git commit -m "Update Docker image version in manifests"
-  #         git push
+      - name: Modify Manifests
+        run: |
+          "sed -i 's|ed358/web-app:latest|ed358/web-app:$TAG|' deployment.yaml"
+          git add deployment.yaml
+          git commit -m "Update Docker image version in deployment.yaml"
+          git push
