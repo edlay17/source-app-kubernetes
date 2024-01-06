@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Building and pushing
-        run: echo "bulding and pusing ${{ needs.setTag.outputs.tag }} tag" |
+        run: echo "bulding and pusing ${{ needs.setTag.outputs.tag }} tag"
          
       - name: Build and push Docker images
         uses: docker/build-push-action@v5.1.0
