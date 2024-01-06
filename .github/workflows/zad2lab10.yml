@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v5.1.0
         with:
           push: true
-          tags: ed358/web-app:${{ needs.setTag.outputs.tag-output }}
+          tags: ed358/web-app:v1.0.22
  
   kubernetesCI:
     runs-on: ubuntu-latest
