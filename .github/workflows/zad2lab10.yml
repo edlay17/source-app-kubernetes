@@ -28,9 +28,9 @@ jobs:
          
       - name: Build and push Docker images
         uses: docker/build-push-action@v5.1.0
-          with:
-            push: true
-            tags: user/app:latest
+        with:
+          push: true
+          tags: user/app:latest
  
   # kubernetesCI:
   #   runs-on: ubuntu-latest
