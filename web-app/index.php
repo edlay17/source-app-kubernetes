@@ -15,7 +15,7 @@
     Eduard Chyzhik
 </p>
 <p>
-    version: v1.2.2
+    version: v1.3.0
 </p>
 
 </body>
