@@ -58,7 +58,7 @@ jobs:
           repository: 'edlay17/config-kubernetes'
 
       - name: Show notification
-        run: echo "updating image to ed358/web-app:$TAG...!" 
+        run: echo "updating image to ed358/web-app:${{ needs.setTag.outputs.tag }}...!" 
 
       - name: Configure Git Access
         run: |
