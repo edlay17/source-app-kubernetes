@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Building and pushing
+      - name: Start of building and pushing
         run: echo "bulding and pusing ${{ needs.setTag.outputs.tag }} tag"
          
       - name: Build and push Docker images
@@ -58,7 +58,7 @@ jobs:
           repository: edlay17/config-kubernetes
           token: ${{ secrets.GIT_PERSONAL_TOKEN }}
 
-      - name: Show notification
+      - name: Start of updating image's tag
         run: echo "updating image to ed358/web-app:${{ needs.setTag.outputs.tag }}...!" 
 
       - name: Configure Git Access
@@ -68,7 +68,7 @@ jobs:
       
       - name: Modify Manifests
         run: |
-          sed -i "s|ed358/web-app:v[0-9]*\.[0-9]*\.[0-9]*$|ed358/web-app:${{ needs.setTag.outputs.tag }}|" deployment.yaml
+          sed -i "s|ed358/web-app(:v[0-9]+\.[0-9]+\.[0-9]+)?$|ed358/web-app:${{ needs.setTag.outputs.tag }}|" deployment.yaml
           cat deployment.yaml
           git add deployment.yaml
           git commit -m "Update Docker image version in deployment.yaml"
