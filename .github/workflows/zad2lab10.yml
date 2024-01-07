@@ -68,7 +68,7 @@ jobs:
       
       - name: Modify Manifests
         run: |
-          sed -i "s|ed358/web-app:v[0-9]+\.[0-9]+\.[0-9]+$|ed358/web-app:${{ needs.setTag.outputs.tag }}|" deployment.yaml 
+          sed -i "s|ed358/web-app:v[0-9]*\.[0-9]*\.[0-9]*$|ed358/web-app:${{ needs.setTag.outputs.tag }}|" deployment.yaml 
           cat deployment.yaml
           git add .
           git commit -m "Update Docker image versions"
