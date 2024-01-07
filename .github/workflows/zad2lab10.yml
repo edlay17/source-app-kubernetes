@@ -55,7 +55,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: 'edlay17/config-kubernetes'
+          repository: edlay17/config-kubernetes
+          token: ${{ secrets.GIT_PERSONAL_TOKEN }}
 
       - name: Show notification
         run: echo "updating image to ed358/web-app:${{ needs.setTag.outputs.tag }}...!" 
