@@ -46,17 +46,6 @@ jobs:
         with:
           push: true
           tags: ed358/web-app:${{ needs.setTag.outputs.tag }}
- 
-      - name: Start of updating image's version in the index.php
-        run: echo "updating version to ${{ needs.setTag.outputs.tag }}...!" 
-
-      - name: Modify index.php
-        run: |
-          sed -i "s|<p>[[:space:]]*version: v[0-9]+\.[0-9]+\.[0-9]+[[:space:]]*</p>|<p>${{ needs.setTag.outputs.tag }}</p>|" web-app/index.php
-          cat web-app/index.php
-          git add web-app/index.php
-          git commit -m "Update app version"
-          git push
 
   kubernetesCI:
     runs-on: ubuntu-latest
